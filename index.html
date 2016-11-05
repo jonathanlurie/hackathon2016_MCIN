@@ -269,6 +269,9 @@
 
               let intensity = mincData.getIntensityValue(i, j, k, 0) / (voxelMax * 0.7);
 
+              if(intensity < 0.1)
+                continue;
+
               // positions
               positions[ iterator ]     = i;
     					positions[ iterator + 1 ] = j;
@@ -285,8 +288,8 @@
           }
         }
 
-        geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
-				geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+        geometry.addAttribute( 'position', new THREE.BufferAttribute( positions.subarray(0, iterator), 3 ) );
+				geometry.addAttribute( 'color', new THREE.BufferAttribute( colors.subarray(0, iterator), 3 ) );
 				geometry.computeBoundingSphere();
 
 				var material = new THREE.PointsMaterial( { size: 1., vertexColors: THREE.VertexColors } );
